@@ -9,21 +9,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.Bind;
+
 public class SharedElementTransition extends Activity implements View.OnClickListener {
 
+    @Bind(R.id.layout_root_view)
     ViewGroup mRootView;
-    private View mRedBox, mGreenBox, mBlueBox, mBlackBox;
+    @Bind(R.id.red_box)
+    View mRedBox;
+    @Bind(R.id.green_box)
+    View mGreenBox;
+    @Bind(R.id.blue_box)
+    View mBlueBox;
+    @Bind(R.id.black_box)
+    View mBlackBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shared_element_transition);
-        mRootView = (ViewGroup) findViewById(R.id.layout_root_view);
         mRootView.setOnClickListener(this);
-        mRedBox = findViewById(R.id.red_box);
-        mGreenBox = findViewById(R.id.green_box);
-        mBlueBox = findViewById(R.id.blue_box);
-        mBlackBox = findViewById(R.id.black_purple);
     }
+
     @Override
     public void onClick(View v) {
         TransitionManager.beginDelayedTransition(mRootView, new AutoTransition());

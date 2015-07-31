@@ -1,39 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_root_view"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".SharedElementTransition">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
 
-    <View
-        android:id="@+id/red_box"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_red_dark"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
-    <View
-        android:id="@+id/green_box"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_toRightOf="@id/red_box"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_green_light"/>
-    <View
-        android:id="@+id/blue_box"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_below="@id/red_box"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_blue_dark"/>
-    <View
-        android:id="@+id/black_purple"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_below="@id/red_box"
-        android:layout_toRightOf="@id/blue_box"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_purple"/>
+        <View
+            android:id="@+id/red_box"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:background="#f00"
+            android:elevation="4dp"/>
+
+        <View
+            android:id="@+id/green_box"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@id/red_box"
+            android:background="#0f0"
+            android:elevation="4dp"/>
+
+        <View
+            android:id="@+id/blue_box"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/red_box"
+            android:layout_margin="8dp"
+            android:background="#00f"
+            android:elevation="4dp"/>
+
+        <View
+            android:id="@+id/black_box"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/green_box"
+            android:layout_margin="8dp"
+            android:layout_toEndOf="@id/blue_box"
+            android:background="#000"
+            android:elevation="4dp"/>
+    </RelativeLayout>
 </RelativeLayout>
