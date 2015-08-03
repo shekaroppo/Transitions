@@ -36,10 +36,10 @@ public class BeginDelayedTransition extends Activity {
     private boolean mBoundChanged = false;
     private int mHeight;
     private int mWidth;
-    Scene mScene1, mScene2,mScene3;
+    Scene mScene1, mScene2, mScene3;
     TransitionManager mTransitionManager;
     private boolean mIsScene2Visible = false;
-    private boolean mIsScene3Visible=false;
+    private boolean mIsScene3Visible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,26 +81,29 @@ public class BeginDelayedTransition extends Activity {
         switch (id) {
             case R.id.fade:
                 mTransitionType = new Fade();
-                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
-                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.slide:
                 Slide slide = new Slide();
                 slide.setSlideEdge(Gravity.TOP);
                 mTransitionType = slide;
-                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
-                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.explode:
                 mTransitionType = new Explode();
-                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
-                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.autoTransition:
                 mTransitionType = new AutoTransition();
+                break;
+        }
+        switch (id) {
+            case R.id.fade:
+            case R.id.slide:
+            case R.id.explode:
+            case R.id.autoTransition:
                 mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
                 toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
+        }
+        switch (id) {
             case R.id.changeBounds:
                 mTransitionType = new ChangeBounds();
                 mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
