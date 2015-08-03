@@ -22,5 +22,21 @@
         android:fromScene="@layout/scene2"
         android:toScene="@layout/scene1"
         android:transition="@transition/changebounds" />
+    <transition
+        android:fromScene="@layout/scene1"
+        android:toScene="@layout/scene3"
+        android:transition="@transition/changebounds_fadein_together" />
+    <transition
+        android:fromScene="@layout/scene3"
+        android:toScene="@layout/scene1"
+        android:transition="@transition/changebounds_fadein_together" />
+    <transition
+        android:fromScene="@layout/scene2"
+        android:toScene="@layout/scene3"
+        android:transition="@transition/changebounds_fadein_together" />
+    <transition
+        android:fromScene="@layout/scene3"
+        android:toScene="@layout/scene2"
+        android:transition="@transition/changebounds_fadein_together" />
 </transitionManager>
 

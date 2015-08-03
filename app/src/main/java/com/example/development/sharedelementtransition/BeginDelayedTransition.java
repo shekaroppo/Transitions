@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BeginDelayedTransition extends Activity implements View.OnClickListener {
+public class BeginDelayedTransition extends Activity {
 
     @Bind(R.id.layout_root_view)
     ViewGroup mRootView;
@@ -33,19 +33,19 @@ public class BeginDelayedTransition extends Activity implements View.OnClickList
     @Bind(R.id.black_box)
     View mBlackBox;
     private Transition mTransitionType;
-    private boolean mBoundChanged =false;
+    private boolean mBoundChanged = false;
     private int mHeight;
     private int mWidth;
-    Scene mScene1, mScene2;
+    Scene mScene1, mScene2,mScene3;
     TransitionManager mTransitionManager;
-    private boolean mIsScene2Visible=false;
+    private boolean mIsScene2Visible = false;
+    private boolean mIsScene3Visible=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transitions);
         ButterKnife.bind(this);
-        mRootView.setOnClickListener(this);
         inflateScene();
         inflateTransitionManager();
         setInitialBoxSize();
@@ -61,6 +61,7 @@ public class BeginDelayedTransition extends Activity implements View.OnClickList
     private void inflateScene() {
         mScene1 = Scene.getSceneForLayout(mRootView, R.layout.scene1, this);
         mScene2 = Scene.getSceneForLayout(mRootView, R.layout.scene2, this);
+        mScene3 = Scene.getSceneForLayout(mRootView, R.layout.scene3, this);
     }
 
     @Override
@@ -70,40 +71,6 @@ public class BeginDelayedTransition extends Activity implements View.OnClickList
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        if(mTransitionType instanceof ChangeBounds){
-            mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
-            if(mBoundChanged){
-                setNewSize(R.id.red_box, mWidth, mHeight);
-                setNewSize(R.id.green_box, mWidth, mHeight);
-                setNewSize(R.id.blue_box, mWidth, mHeight);
-                setNewSize(R.id.black_box, mWidth, mHeight);
-                mBoundChanged=false;
-            }
-            else{
-                setNewSize(R.id.red_box, 150, 25);
-                setNewSize(R.id.green_box, 150, 25);
-                setNewSize(R.id.blue_box, 150, 25);
-                setNewSize(R.id.black_box, 150, 25);
-                mBoundChanged=true;
-            }
-        }
-        else if(mTransitionType instanceof SceneTransition){
-            if(mIsScene2Visible) {
-                mIsScene2Visible = false;
-                mTransitionManager.transitionTo(mScene1);
-            }
-            else{
-                mIsScene2Visible = true;
-                mTransitionManager.transitionTo(mScene2);
-            }
-        }
-        else {
-            mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
-            toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -114,23 +81,60 @@ public class BeginDelayedTransition extends Activity implements View.OnClickList
         switch (id) {
             case R.id.fade:
                 mTransitionType = new Fade();
+                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
+                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.slide:
-                Slide slide=new Slide();
+                Slide slide = new Slide();
                 slide.setSlideEdge(Gravity.TOP);
                 mTransitionType = slide;
+                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
+                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.explode:
                 mTransitionType = new Explode();
+                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
+                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.autoTransition:
                 mTransitionType = new AutoTransition();
+                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
+                toggleVisibility(mRedBox, mGreenBox, mBlueBox, mBlackBox);
                 break;
             case R.id.changeBounds:
                 mTransitionType = new ChangeBounds();
+                mTransitionManager.beginDelayedTransition(mRootView, mTransitionType);
+                if (mBoundChanged) {
+                    setNewSize(R.id.red_box, mWidth, mHeight);
+                    setNewSize(R.id.green_box, mWidth, mHeight);
+                    setNewSize(R.id.blue_box, mWidth, mHeight);
+                    setNewSize(R.id.black_box, mWidth, mHeight);
+                    mBoundChanged = false;
+                } else {
+                    setNewSize(R.id.red_box, 150, 25);
+                    setNewSize(R.id.green_box, 150, 25);
+                    setNewSize(R.id.blue_box, 150, 25);
+                    setNewSize(R.id.black_box, 150, 25);
+                    mBoundChanged = true;
+                }
                 break;
-            case R.id.sceneTransition:
-                mTransitionType = new SceneTransition();
+            case R.id.changeBoundsSceneTransition:
+                if (mIsScene2Visible) {
+                    mIsScene2Visible = false;
+                    mTransitionManager.transitionTo(mScene1);
+                } else {
+                    mIsScene2Visible = true;
+                    mTransitionManager.transitionTo(mScene2);
+                }
+                break;
+            case R.id.changeBoundsSceneTransitionFadeIn:
+                if (mIsScene3Visible) {
+                    mIsScene3Visible = false;
+                    mTransitionManager.transitionTo(mScene1);
+                } else {
+                    mIsScene3Visible = true;
+                    mTransitionManager.transitionTo(mScene3);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -153,8 +157,8 @@ public class BeginDelayedTransition extends Activity implements View.OnClickList
 
     public void setInitialBoxSize() {
         ViewGroup.LayoutParams params = mRedBox.getLayoutParams();
-        mWidth=params.width;
-        mHeight= params.height;
+        mWidth = params.width;
+        mHeight = params.height;
     }
 
 }

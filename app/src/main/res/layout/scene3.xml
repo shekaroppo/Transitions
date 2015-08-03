@@ -41,4 +41,10 @@
         android:background="#000"
         android:elevation="4dp"/>
 
+
+    <View
+        android:id="@+id/grayscaleContainer"
+        android:background="@android:color/holo_blue_light"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 </RelativeLayout>
